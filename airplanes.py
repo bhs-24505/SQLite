@@ -95,3 +95,43 @@ def print_all_airplanes_by_max_fuel():
     for airplane in results:
         print(f'{airplane[1]:<30}{airplane[2]:<8}{airplane[3]:<8}{airplane[4]:<8}{airplane[5]:<8}{airplane[6]:<8}{airplane[7]:<8}{airplane[8]:<8}')
     db.close()
+
+#main code/user input
+while True:
+
+    user_input = input(
+"""
+What would you like to do.
+1. Print all airplanes
+2. Print all airplanes sorted by wingspan
+3. Print all airplanes sorted by length
+4. Print all airplanes sorted by max speed
+5. Print all airplanes sorted by max range
+6. Print all airplanes sorted by max passenger
+7. Print all airplanes sorted by max fuel
+8. Exit
+""")
+    try:
+        if user_input == '1':
+            print_all_airplanes()
+        elif user_input == '2':
+            print_all_airplanes_by_wingspan()
+        elif user_input == '3':
+            print_all_airplanes_by_length()
+        elif user_input == '4':
+            print_all_airplanes_by_max_speed()
+        elif user_input == '5':
+            print_all_airplanes_by_max_range()
+        elif user_input == '6':
+            print_all_airplanes_by_max_passenger()
+        elif user_input == '7':
+            print_all_airplanes_by_max_fuel()
+        elif user_input == '8':
+            break
+        else:
+            print('That was not an option\n')
+    except:
+        print('That was not an option\n')
+
+
+
