@@ -15,7 +15,7 @@ def print_all_airplanes():
     #loop through all results
     print(f'model                      wingspan  length  max_speed  max_range  max_passenger  max_fuel  manufacturer_id')
     for airplane in results:
-        print(f'{airplane[1]:<30}{airplane[2]:<8}{airplane[3]:<8}{airplane[4]:<8}{airplane[5]:<8}{airplane[6]:<8}{airplane[7]:<8}{airplane[8]:<8}')
+        print(f'{airplane[1]:<27}{airplane[2]:<10}{airplane[3]:<8}{airplane[4]:<11}{airplane[5]:<11}{airplane[6]:<15}{airplane[7]:<10}{airplane[8]:<8}')
     db.close()
 
 def print_all_airplanes_by_wingspan():
@@ -28,7 +28,7 @@ def print_all_airplanes_by_wingspan():
     #loop through all results
     print(f'model                      wingspan  length  max_speed  max_range  max_passenger  max_fuel  manufacturer_id')
     for airplane in results:
-        print(f'{airplane[1]:<30}{airplane[2]:<8}{airplane[3]:<8}{airplane[4]:<8}{airplane[5]:<8}{airplane[6]:<8}{airplane[7]:<8}{airplane[8]:<8}')
+        print(f'{airplane[1]:<27}{airplane[2]:<10}{airplane[3]:<8}{airplane[4]:<11}{airplane[5]:<11}{airplane[6]:<15}{airplane[7]:<10}{airplane[8]:<8}')
     db.close()
 
 def print_all_airplanes_by_length():
@@ -41,7 +41,7 @@ def print_all_airplanes_by_length():
     #loop through all results
     print(f'model                      wingspan  length  max_speed  max_range  max_passenger  max_fuel  manufacturer_id')
     for airplane in results:
-        print(f'{airplane[1]:<30}{airplane[2]:<8}{airplane[3]:<8}{airplane[4]:<8}{airplane[5]:<8}{airplane[6]:<8}{airplane[7]:<8}{airplane[8]:<8}')
+        print(f'{airplane[1]:<27}{airplane[2]:<10}{airplane[3]:<8}{airplane[4]:<11}{airplane[5]:<11}{airplane[6]:<15}{airplane[7]:<10}{airplane[8]:<8}')
     db.close()
 
 def print_all_airplanes_by_max_speed():
@@ -54,7 +54,7 @@ def print_all_airplanes_by_max_speed():
     #loop through all results
     print(f'model                      wingspan  length  max_speed  max_range  max_passenger  max_fuel  manufacturer_id')
     for airplane in results:
-        print(f'{airplane[1]:<30}{airplane[2]:<8}{airplane[3]:<8}{airplane[4]:<8}{airplane[5]:<8}{airplane[6]:<8}{airplane[7]:<8}{airplane[8]:<8}')
+        print(f'{airplane[1]:<27}{airplane[2]:<10}{airplane[3]:<8}{airplane[4]:<11}{airplane[5]:<11}{airplane[6]:<15}{airplane[7]:<10}{airplane[8]:<8}')
     db.close()
 
 def print_all_airplanes_by_max_range():
@@ -67,7 +67,7 @@ def print_all_airplanes_by_max_range():
     #loop through all results
     print(f'model                      wingspan  length  max_speed  max_range  max_passenger  max_fuel  manufacturer_id')
     for airplane in results:
-        print(f'{airplane[1]:<30}{airplane[2]:<8}{airplane[3]:<8}{airplane[4]:<8}{airplane[5]:<8}{airplane[6]:<8}{airplane[7]:<8}{airplane[8]:<8}')
+        print(f'{airplane[1]:<27}{airplane[2]:<10}{airplane[3]:<8}{airplane[4]:<11}{airplane[5]:<11}{airplane[6]:<15}{airplane[7]:<10}{airplane[8]:<8}')
     db.close()
 
 def print_all_airplanes_by_max_passenger():
@@ -80,7 +80,7 @@ def print_all_airplanes_by_max_passenger():
     #loop through all results
     print(f'model                      wingspan  length  max_speed  max_range  max_passenger  max_fuel  manufacturer_id')
     for airplane in results:
-        print(f'{airplane[1]:<30}{airplane[2]:<8}{airplane[3]:<8}{airplane[4]:<8}{airplane[5]:<8}{airplane[6]:<8}{airplane[7]:<8}{airplane[8]:<8}')
+        print(f'{airplane[1]:<27}{airplane[2]:<10}{airplane[3]:<8}{airplane[4]:<11}{airplane[5]:<11}{airplane[6]:<15}{airplane[7]:<10}{airplane[8]:<8}')
     db.close()
 
 def print_all_airplanes_by_max_fuel():
@@ -93,7 +93,49 @@ def print_all_airplanes_by_max_fuel():
     #loop through all results
     print(f'model                      wingspan  length  max_speed  max_range  max_passenger  max_fuel  manufacturer_id')
     for airplane in results:
-        print(f'{airplane[1]:<30}{airplane[2]:<8}{airplane[3]:<8}{airplane[4]:<8}{airplane[5]:<8}{airplane[6]:<8}{airplane[7]:<8}{airplane[8]:<8}')
+        print(f'{airplane[1]:<27}{airplane[2]:<10}{airplane[3]:<8}{airplane[4]:<11}{airplane[5]:<11}{airplane[6]:<15}{airplane[7]:<10}{airplane[8]:<8}')
+    db.close()
+
+def search_and_print_airplane():
+    '''search and print airplanes by id'''
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql ='SELECT id, model FROM airplanes'
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    print(f'id    model')
+    for model in results:
+        print(f'{model[0]:<6}{model[1]:<12}')
+    print()
+    id = int(input('Enter id to view details:\n'))
+    sql = 'SELECT * FROM airplanes WHERE id=?'
+    cursor.execute(sql, (id,))
+    airplane = cursor.fetchone()
+    if airplane:
+        print(f'Airplane information:')
+        print(f'Model: {airplane[1]}')
+        print(f'Wingspan: {airplane[2]}m')
+        print(f'length: {airplane[3]}m')
+        print(f'Max_speed: {airplane[4]}km/h')
+        print(f'Max range: {airplane[5]}km')
+        print(f'Max passenger: {airplane[6]}')
+        print(f'Max fuel: {airplane[7]}L')
+        print(f'Manufacturer id: {airplane[8]}')
+    else:
+        print(f'No airplane found with id{id}')
+    db.close()
+
+def print_all_manufacturers():
+    '''print all the manufacturers'''
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = 'SELECT * FROM manufacturers'
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    #loop through all results
+    print(f'id    name')
+    for manufacturer in results:
+        print(f'{manufacturer[0]:<6}{manufacturer[1]:<12}')
     db.close()
 
 #main code/user input
@@ -109,29 +151,33 @@ What would you like to do.
 5. Print all airplanes sorted by max range
 6. Print all airplanes sorted by max passenger
 7. Print all airplanes sorted by max fuel
-8. Exit
-""")
-    try:
-        if user_input == '1':
-            print_all_airplanes()
-        elif user_input == '2':
-            print_all_airplanes_by_wingspan()
-        elif user_input == '3':
-            print_all_airplanes_by_length()
-        elif user_input == '4':
-            print_all_airplanes_by_max_speed()
-        elif user_input == '5':
-            print_all_airplanes_by_max_range()
-        elif user_input == '6':
-            print_all_airplanes_by_max_passenger()
-        elif user_input == '7':
-            print_all_airplanes_by_max_fuel()
-        elif user_input == '8':
-            break
-        else:
-            print('That was not an option\n')
-    except:
+8. Print all information of one particular airplane
+9. Print all manufacturers
+10. Exit
+""")# run different defs depending in user's input
+    if user_input == '1':
+        print_all_airplanes()
+    elif user_input == '2':
+        print_all_airplanes_by_wingspan()
+    elif user_input == '3':
+        print_all_airplanes_by_length()
+    elif user_input == '4':
+        print_all_airplanes_by_max_speed()
+    elif user_input == '5':
+        print_all_airplanes_by_max_range()
+    elif user_input == '6':
+        print_all_airplanes_by_max_passenger()
+    elif user_input == '7':
+        print_all_airplanes_by_max_fuel()
+    elif user_input == '8':
+        search_and_print_airplane()
+    elif user_input == '9':
+        print_all_manufacturers()
+    elif user_input == '10':
+        break
+    else:
         print('That was not an option\n')
+   
 
 
 
